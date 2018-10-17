@@ -281,15 +281,17 @@
         user: vagrant
         job: "php /app/bin/magento setup:cron:run >> /app/var/log/setup.cron.log"
 
-    ## Install ZSH and set it as login shell
+    ## Install ZSH
     - name: Install Zsh
       apt:
         name: zsh
         state: present
 
-    - name: Set ZSH as default shell
-      command: sh -c "sudo chsh -s $(which zsh);"
+    - name: Install Oh My Zsh
+      command: sh -c "wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh"
 
+    - name: Set ZSH as default shell
+      command: sh -c "sudo chsh -s $(which zsh) vagrant"
 
     ### Add linuxuprising repository
     - name: Add linuxuprising apt repository
