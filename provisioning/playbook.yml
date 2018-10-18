@@ -28,6 +28,7 @@
         - ruby-dev
         - rubygems
         - apt-transport-https
+        - pv
         - lsb-release
         - ca-certificates
     ## Install ZSH
