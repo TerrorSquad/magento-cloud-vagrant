@@ -290,10 +290,14 @@
       command: sh -c "sudo chsh -s $(which zsh) vagrant"
 
     - name: Install Oh My Zsh
-      command: sh -c "wget --no-check-certificate https://github.com/robbyrussel/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true"
+      command: sh -c "wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true"
+      become: yes
+      become_user: vagrant
 
-    # - name: Change default ZSH theme
-    #   command: sh -c "sed -i 's/robbyrussell/ys/g' /home/vagrant/.zshrc"
+    - name: Change default ZSH theme
+      command: sh -c "sed -i 's/robbyrussell/ys/g' /home/vagrant/.zshrc"
+      become: yes
+      become_user: vagrant
 
     ### Add linuxuprising repository
     - name: Add linuxuprising apt repository
