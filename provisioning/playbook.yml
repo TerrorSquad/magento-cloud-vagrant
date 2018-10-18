@@ -30,6 +30,24 @@
         - apt-transport-https
         - lsb-release
         - ca-certificates
+    ## Install ZSH
+    - name: Install Zsh
+      command: sh -c "sudo apt-get install zsh -y"
+      become: yes
+      become_user: vagrant
+
+    - name: Set ZSH as default shell
+      command: sh -c "sudo chsh -s $(which zsh) vagrant"
+
+    - name: Install Oh My Zsh
+      command: sh -c "wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true"
+      become: yes
+      become_user: vagrant
+
+    - name: Change default ZSH theme
+      command: sh -c "sed -i 's/robbyrussell/ys/g' /home/vagrant/.zshrc"
+      become: yes
+      become_user: vagrant
 
     - name: Remove apache
       apt:
@@ -252,12 +270,12 @@
 
     ### Install magneto-cloud
     - name: Install Magento Cloud CLI
-      command: bash -c "curl -sS https://accounts.magento.cloud/cli/installer | php"
+      command: zsh -c "curl -sS https://accounts.magento.cloud/cli/installer | php"
       become: yes
       become_user: vagrant
 
     - name: Source Magneto CLI Bash command shortcut
-      command: bash -c "source ~/.bashrc"
+      command: zsh -c "source ~/.zshrc"
       become: yes
       become_user: vagrant
 
@@ -279,25 +297,6 @@
         name: "Magneto cron setup:cron:run"
         user: vagrant
         job: "php /app/bin/magento setup:cron:run >> /app/var/log/setup.cron.log"
-
-    ## Install ZSH
-    - name: Install Zsh
-      command: sh -c "sudo apt-get install zsh -y"
-      become: yes
-      become_user: vagrant
-
-    - name: Set ZSH as default shell
-      command: sh -c "sudo chsh -s $(which zsh) vagrant"
-
-    - name: Install Oh My Zsh
-      command: sh -c "wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true"
-      become: yes
-      become_user: vagrant
-
-    - name: Change default ZSH theme
-      command: sh -c "sed -i 's/robbyrussell/ys/g' /home/vagrant/.zshrc"
-      become: yes
-      become_user: vagrant
 
     ### Add linuxuprising repository
     - name: Add linuxuprising apt repository
