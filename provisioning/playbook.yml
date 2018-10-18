@@ -63,13 +63,13 @@
       apt_repository:
         repo: "deb http://nginx.org/packages/debian/ jessie nginx"
         state: present
-        filename: 'nginx'
+        filename: "nginx"
 
     - name: Add official Nginx APT repository
       apt_repository:
         repo: "deb-src http://nginx.org/packages/debian/ jessie nginx"
         state: present
-        filename: 'nginx'
+        filename: "nginx"
 
       #name: "nginx={{nginx_version}}"
     - name: Install Nginx
@@ -122,13 +122,13 @@
       apt_repository:
         repo: "deb https://packages.sury.org/php/ jessie main"
         state: present
-        filename: 'php'
+        filename: "php"
 
     - name: Add official PHP7.1 APT repository
       apt_repository:
         repo: "deb-src https://packages.sury.org/php/ jessie main"
         state: present
-        filename: 'php'
+        filename: "php"
 
     - name: Install PHP7.1 CLI
       apt:
@@ -213,21 +213,20 @@
         cache_valid_time: 3600
 
     - name: MariaDB APT repository key
-      apt_key:
-        keyserver=keyserver.ubuntu.com
+      apt_key: keyserver=keyserver.ubuntu.com
         id=0xcbcb082a1bb943db
 
     - name: Add official MariaDB APT repository
       apt_repository:
         repo: "deb [arch=amd64,i386] http://mirrors.accretive-networks.net/mariadb/repo/10.1/debian jessie main"
         state: present
-        filename: 'mariadb'
+        filename: "mariadb"
 
     - name: Add official MariaDB APT repository
       apt_repository:
         repo: "deb-src http://mirrors.accretive-networks.net/mariadb/repo/10.1/debian jessie main"
         state: present
-        filename: 'mariadb'
+        filename: "mariadb"
 
     - name: Install MariaDB server
       apt:
@@ -283,15 +282,18 @@
 
     ## Install ZSH
     - name: Install Zsh
-      apt:
-        name: zsh
-        state: present
-
-    - name: Install Oh My Zsh
-      command: sh -c "wget --no-check-certificate https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh"
+      command: sh -c "sudo apt-get install zsh -y"
+      become: yes
+      become_user: vagrant
 
     - name: Set ZSH as default shell
       command: sh -c "sudo chsh -s $(which zsh) vagrant"
+
+    - name: Install Oh My Zsh
+      command: sh -c "wget --no-check-certificate https://github.com/robbyrussel/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true"
+
+    # - name: Change default ZSH theme
+    #   command: sh -c "sed -i 's/robbyrussell/ys/g' /home/vagrant/.zshrc"
 
     ### Add linuxuprising repository
     - name: Add linuxuprising apt repository
