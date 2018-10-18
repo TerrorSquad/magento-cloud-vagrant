@@ -277,7 +277,7 @@
       become_user: vagrant
 
     - name: Source Magneto CLI Bash command shortcut
-      command: zsh -c "source ~/.zshrc"
+      command: zsh -c "tail -4 /home/vagrant/.bashrc >> /home/vagrant/.zshrc; source /home/vagrant/.zshrc"
       become: yes
       become_user: vagrant
 
