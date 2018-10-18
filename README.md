@@ -44,9 +44,12 @@ In the end, the application code should be owned by `vagrant:vagrant`. When ssh'
 19. `$ find var vendor pub/static pub/media app/etc -type d -exec chmod g+ws {} \;`
 20. `$ chown -R :vagrant .`
 21. `$ chmod u+x bin/magento`
-22. `$ cd /app/bin`
-23. `./magento setup:install --base-url="http://{{ site_url }}" --db-host=localhost --db-name="{{ mysql_database }}" --db-user="{{ mysql_user }}" --db-password="{{ mysql_pass }}" --admin-firstname=Magento --admin-lastname=Admin --admin-email="{{ admin_email }}" --admin-user="{{ admin_user }}" --admin-password="{{ admin_password }}" --language=en_US --currency=USD --timezone=America/Los_Angeles --use-rewrites=1`
-24. View you Magento install at {{ site_url }}
+22. Copy database dump file into /app on the host and do the import inside vagrant
+23. `$ pv dump-*.sql.gz | zcat | mysql -u 'magento' -p'magento' magento`
+24. `$ cd /app/bin`
+25. `./magento setup:install --base-url="http://{{ site_url }}" --db-host=localhost --db-name="{{ mysql_database }}" --db-user="{{ mysql_user }}" --db-password="{{ mysql_pass }}" --admin-firstname=Magento --admin-lastname=Admin --admin-email="{{ admin_email }}" --admin-user="{{ admin_user }}" --admin-password="{{ admin_password }}" --language=en_US --currency=USD --timezone=America/Los_Angeles --use-rewrites=1`
+26. (ex). `./magento setup:install --base-url="http://dev.magento" --db-host=localhost --db-name="magento" --db-user="magento" --db-password="magento" --admin-firstname=Magento --admin-lastname=Admin --admin-email="g.ninkovic@beeit.rs" --admin-user="admin" --admin-password="admin123" --language=en_US --currency=USD --timezone=America/Los_Angeles --use-rewrites=1 --es-hosts=localhost:9200`
+27. View you Magento install at {{ site_url }}
 
 See here for more details on installing Magento Cloud locally if you run into issues:
 http://devdocs.magento.com/guides/v2.1/cloud/access-acct/set-up-env.html
