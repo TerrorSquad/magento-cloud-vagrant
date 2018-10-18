@@ -28,8 +28,9 @@
         - ruby-dev
         - rubygems
         - apt-transport-https
-        - pv
         - lsb-release
+        - pv
+        - htop
         - ca-certificates
     ## Install ZSH
     - name: Install Zsh
@@ -281,23 +282,23 @@
       become_user: vagrant
 
     ### Setup Magento cron jobs
-    - name: "Magneto cron:run"
-      cron:
-        name: "Magneto cron:run"
-        user: vagrant
-        job: 'php /app/bin/magento cron:run | grep -v "Ran jobs by schedule" >> /app/var/log/magento.cron.log'
+    # - name: "Magneto cron:run"
+    #   cron:
+    #     name: "Magneto cron:run"
+    #     user: vagrant
+    #     job: 'php /app/bin/magento cron:run | grep -v "Ran jobs by schedule" >> /app/var/log/magento.cron.log'
 
-    - name: "Magneto cron.php"
-      cron:
-        name: "Magneto cron.php"
-        user: vagrant
-        job: "php /app/update/cron.php >> /app/var/log/update.cron.log"
+    # - name: "Magneto cron.php"
+    #   cron:
+    #     name: "Magneto cron.php"
+    #     user: vagrant
+    #     job: "php /app/update/cron.php >> /app/var/log/update.cron.log"
 
-    - name: "Magneto cron setup:cron:run"
-      cron:
-        name: "Magneto cron setup:cron:run"
-        user: vagrant
-        job: "php /app/bin/magento setup:cron:run >> /app/var/log/setup.cron.log"
+    # - name: "Magneto cron setup:cron:run"
+    #   cron:
+    #     name: "Magneto cron setup:cron:run"
+    #     user: vagrant
+    #     job: "php /app/bin/magento setup:cron:run >> /app/var/log/setup.cron.log"
 
     ### Add linuxuprising repository
     - name: Add linuxuprising apt repository
